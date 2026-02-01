@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favorites</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+    {% macro render_card(fav) %}
+        {% set details = fav.split(' | ') %}
+        {% set text_info = details[0] %}
+        {% set img_src = details[1] if details|length > 1 else '' %}
+        
+        <div class="fav-card">
+            <form action="/delete" method="POST">
+                <input type="hidden" name="fav_item" value="{{ fav }}">
+                <button type="submit" class="delete-btn">✕</button>
+            </form>
+
+            <img src="{{ img_src }}" class="fav-mini-art" alt="Art">
+            
+            <a href="https://open.spotify.com/search/{{ text_info.replace(' ', '%20') }}" target="_blank" class="spotify-link">▶</a>
+
+            <div class="fav-info">
+                <h4 style="margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                    {{ text_info.split(' - ')[1] }}
+                </h4>
+                <p style="margin: 5px 0 0; color: #b3b3b3; font-size: 0.85rem;">
+                    {{ text_info.split(' - ')[0] }}
+                </p>
+            </div>
+        </div>
+    {% endmacro %}
+
+    <div class="favorites-container">
+        <h2 style="padding-left: 20px;">Your Collection</h2>
+        {% if favorites %}
+            <div class="favorites-grid">
+                {% for fav in favorites %}
+                    {{ render_card(fav) }}
+                {% endfor %}
+            </div>
+        {% else %}
+            <p style="color: var(--text-dim); padding-left: 20px;">No saved songs yet. Click the heart to start your collection!</p>
+        {% endif %}
+    </div>
+
+<body>
+
+
+</body>
+</html>

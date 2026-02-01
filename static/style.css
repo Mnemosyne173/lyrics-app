@@ -1,0 +1,261 @@
+:root {
+    --bg-color: #121212;
+    --card-bg: #1e1e1e;
+    --accent-color: #1DB954;
+    --text-main: #ffffff;
+    --text-dim: #b3b3b3;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+/* Hero / Search Section */
+.hero-section {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), var(--bg-color)), #282828;
+    padding: 60px 20px;
+    text-align: center;
+    border-bottom: 1px solid #333;
+}
+
+.search-container {
+    max-width: 500px;
+    margin: 20px auto;
+}
+
+.input-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 14px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    background: #2a2a2a;
+    color: white;
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+
+.search-btn {
+    background-color: var(--accent-color);
+    color: black;
+    font-weight: bold;
+    padding: 14px 40px;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: transform 0.2s, background 0.2s;
+    margin-top: 10px;
+}
+
+.search-btn:hover {
+    transform: scale(1.05);
+    background-color: #1ed760;
+}
+
+/* Main Result Layout */
+.music-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.art-column {
+    flex: 1;
+    min-width: 300px;
+    text-align: center;
+}
+
+.album-image {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.lyrics-column {
+    flex: 1.5;
+    min-width: 300px;
+}
+
+.song-info h1 {
+    margin: 0;
+    font-size: 2.5rem;
+}
+
+.song-info h3 {
+    color: var(--text-dim);
+    margin-top: 5px;
+    font-weight: 400;
+}
+
+.lyrics-display {
+    background: var(--card-bg);
+    padding: 30px;
+    border-radius: 15px;
+    margin-top: 25px;
+    font-size: 1.1rem;
+    white-space: pre-line;
+
+    /* --- SCROLLABLE SETTINGS --- */
+    max-height: 500px;       /* Limits the height */
+    overflow-y: auto;        /* Adds a scrollbar only if text is too long */
+    scrollbar-width: thin;   /* Makes scrollbar look sleek on Firefox */
+    scrollbar-color: var(--accent-color) transparent;
+}
+
+/* Custom scrollbar for Chrome, Edge, and Safari */
+.lyrics-display::-webkit-scrollbar {
+    width: 8px;
+}
+
+.lyrics-display::-webkit-scrollbar-thumb {
+    background-color: var(--accent-color);
+    border-radius: 10px;
+}
+
+.lyrics-display::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.error-box {
+    background: rgba(255, 68, 68, 0.1);
+    color: #ff4444;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    margin: 20px auto;
+    max-width: 600px;
+}
+
+@media (max-width: 768px) {
+    .music-container {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+/* Container for the scrolling track */
+.fav-info {
+    padding: 10px;
+}
+.favorites-container {
+    overflow: hidden; /* Hide the scrollbar */
+    padding: 40px 0;
+    position: relative;
+    background: #121212;
+}
+
+.favorites-grid {
+    display: flex;
+    gap: 20px;
+    width: max-content; /* Important for the animation to work */
+    animation: scroll 30s linear infinite;
+}
+
+/* Pause scroll on hover so user can click buttons */
+.favorites-grid:hover {
+    animation-play-state: paused;
+}
+
+@keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); } /* Adjust based on content length */
+}
+
+/* Redesigned Cards */
+.fav-card {
+    width: 220px;
+    background: #181818;
+    border-radius: 12px;
+    padding: 0;
+    position: relative;
+    transition: background 0.3s ease;
+    border: 1px solid #282828;
+}
+
+.fav-card:hover {
+    background: #282828;
+}
+
+.fav-mini-art {
+    width: 100%;
+    aspect-ratio: 1/1;
+    border-radius: 8px;
+    object-fit: cover;
+    margin-bottom: 15px;
+}
+
+/* Play Button: Floating Green Circle */
+.spotify-link {
+    position: absolute;
+    bottom: 80px;
+    right: 25px;
+    background: #1DB954;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black !important;
+    font-size: 1.2rem;
+    text-decoration: none;
+    box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+}
+
+.fav-card:hover .spotify-link {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Delete Button: Subtle Top-Right X */
+.delete-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.7);
+    color: white;
+    border: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    font-size: 0.8rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.fav-card:hover .delete-btn {
+    opacity: 1;
+}
+
+.delete-btn:hover {
+    background: #ff4444;
+}

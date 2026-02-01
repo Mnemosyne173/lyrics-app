@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lyric Finder</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</head>
+<body>
+
+    <div class="hero-section">
+        <h1>Lyric Finder</h1>
+        <div class="search-container">
+            <form action="/search" method="POST">
+                <div class="input-group">
+                    <label>Artist Name</label>
+                    <input type="text" name="artist_name" placeholder="e.g. Nujabes" required>
+                </div>
+                <div class="input-group">
+                    <label>Song Name</label>
+                    <input type="text" name="song_name" placeholder="e.g. Lady brown" required>
+                </div>
+                <button type="submit" class="search-btn" onclick="this.innerHTML='Searching...';">Get Lyrics</button>
+            </form>
+        </div>
+    </div>
+
+    {% if context.lyrics %}
+    <div class="music-container">
+        <div class="art-column">
+            {% if context.album_art %}
+                <img src="{{ context.album_art }}" alt="Album Art" class="album-image">
+            {% endif %}
+            
+            <form action="/save" method="POST" id="saveForm" style="margin-top: 20px;">
+                <input type="hidden" name="artist" value="{{ context.name }}">
+                <input type="hidden" name="song" value="{{ context.song }}">
+                <input type="hidden" name="album_art" value="{{ context.album_art }}">
+                <button type="button" onclick="silentSave()" class="save-btn" id="saveBtn" style="background: transparent; color: var(--accent-color); border: 1px solid var(--accent-color); padding: 10px 25px; border-radius: 20px; cursor: pointer;">
+                    ♥ Save to Favorites
+                </button>
+            </form>
+        </div>
+
+        <div class="lyrics-column">
+            <div class="song-info">
+                <h1>{{ context.song }}</h1>
+                <h3>{{ context.name }}</h3>
+            </div>
+            <div class="lyrics-display">
+                {{ context.lyrics.replace('\n', '<br>')|safe }}
+            </div>
+        </div>
+    </div>
+    {% elif error %}
+        <div class="error-box">
+            <strong>Oops!</strong> {{ error }}
+        </div>
+    {% else %}
+        <p style="text-align: center; color: var(--text-dim); margin-top: 40px;">Your lyrics will appear here.</p>
+    {% endif %}
+
+</body>
+</html>
