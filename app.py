@@ -3,7 +3,7 @@ from music_api import get_lyrics, get_album_art
 
 app = Flask(__name__)
 
-@app.route('/search', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def get_api_data():
     artist = None
     song = None
@@ -60,9 +60,9 @@ def delete_favorite():
         for line in lines:
             if line.strip() != item_to_delete.strip():
                 f.write(line)           
-    return redirect('/')
+    return redirect('/home')
 
-@app.route('/')
+@app.route('/home')
 def index():
     favs = []
     try:
